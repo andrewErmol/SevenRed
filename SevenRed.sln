@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SevenRedLibrary", "SevenRed
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SevenRed", "SevenRed\SevenRed.csproj", "{2C849DAE-2296-4AFC-AF82-868E66CDC272}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestForSevenRed", "UnitTestForSevenRed\UnitTestForSevenRed.csproj", "{9B2BE4E5-02D4-4612-8CEF-A6729DDC46EC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{2C849DAE-2296-4AFC-AF82-868E66CDC272}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C849DAE-2296-4AFC-AF82-868E66CDC272}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C849DAE-2296-4AFC-AF82-868E66CDC272}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B2BE4E5-02D4-4612-8CEF-A6729DDC46EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B2BE4E5-02D4-4612-8CEF-A6729DDC46EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B2BE4E5-02D4-4612-8CEF-A6729DDC46EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B2BE4E5-02D4-4612-8CEF-A6729DDC46EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
