@@ -46,18 +46,38 @@ namespace SevenRed
             List<string> blackDeck = BlackDeckText.Lines.ToList();
             try
             {
-                WhiteDeck = Service.ConvertListStringToListCard(whiteDeck);
-                BlackDeck = Service.ConvertListStringToListCard(blackDeck);
+                if (whiteDeck.Count <= 8 && blackDeck.Count <= 8)
+                {
+                    WhiteDeck = Service.ConvertListStringToListCard(whiteDeck);
+                    BlackDeck = Service.ConvertListStringToListCard(blackDeck);
+                    
+                    List<TextBox> WhiteSlot = new List<TextBox>(7) { whiteCard1, whiteCard2, whiteCard3, whiteCard4, whiteCard5, whiteCard6, whiteCard7 };
+                    List<TextBox> BlackSlot = new List<TextBox>(7) { blackCard1, blackCard2, blackCard3, blackCard4, blackCard5, blackCard6, blackCard7 };
+
+                    ResetTextbox(WhiteSlot);
+                    ResetTextbox(BlackSlot);
+
+                    EnterCardsToWinForms(WhiteDeck, WhiteSlot);
+                    EnterCardsToWinForms(BlackDeck, BlackSlot);
+                }
+                else
+                {
+                    throw new Exception("Too many cards");
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            List<TextBox> WhiteSlot = new List<TextBox>(7) { whiteCard1, whiteCard2, whiteCard3, whiteCard4, whiteCard5, whiteCard6, whiteCard7};
-            List<TextBox> BlackSlot = new List<TextBox>(7) { blackCard1, blackCard2, blackCard3, blackCard4, blackCard5, blackCard6, blackCard7};
+            }            
+        }
 
-            EnterCardsToWinForms(WhiteDeck, WhiteSlot);
-            EnterCardsToWinForms(BlackDeck, BlackSlot);
+        private void ResetTextbox(List<TextBox> Slot)
+        {
+            for (int i = 0; i < Slot.Count; i++)
+            {
+                Slot[i].Text = "";
+                Slot[i].BackColor = Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(87)))), ((int)(((byte)(50)))));
+            }
         }
 
         private void EnterCardsToWinForms(List<Card> Deck, List<TextBox> Slot)
