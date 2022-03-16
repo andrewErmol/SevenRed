@@ -10,7 +10,7 @@ namespace SevenRed
     internal static class Program
     {
         /// <summary>
-        /// Главная точка входа для приложения.
+        /// Main entry point for application.
         /// </summary>
         [STAThread]
         static void Main()

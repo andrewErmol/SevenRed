@@ -7,7 +7,13 @@ using System.Threading.Tasks;
 namespace SevenRedLibrary
 {
     public static class Service
-    {        
+    {
+        /// <summary>
+        /// Find Won deck
+        /// </summary>
+        /// <param name="WhiteDeck"></param>
+        /// <param name="BlackDeck"></param>
+        /// <returns>String Who won</returns>
         public static string FindWinner(List<Card> WhiteDeck, List<Card> BlackDeck)
         {
             if (HighCard(WhiteDeck).CompareTo(HighCard(BlackDeck)) == 1)
@@ -22,8 +28,13 @@ namespace SevenRedLibrary
             {
                 return $"draw";
             }
-        }        
+        }
 
+        /// <summary>
+        /// Create List<card> for convert</card>
+        /// </summary>
+        /// <param name="deck"></param>
+        /// <returns>list objects of card</returns>
         public static List<Card> ConvertListStringToListCard(List<string> deck)
         {
             List<Card> Deck = new List<Card>();
@@ -35,7 +46,11 @@ namespace SevenRedLibrary
             return Deck;
         }
 
-
+        /// <summary>
+        /// Find high card in ones deck
+        /// </summary>
+        /// <param name="SetOfCards"></param>
+        /// <returns>Max card in deck</returns>
         private static Card HighCard(List<Card> SetOfCards)
         {
             Card max = SetOfCards[0];

@@ -7,8 +7,6 @@ using System.Windows.Forms;
 
 namespace SevenRed
 {
-
-
     public partial class MainForm : Form
     {
         Point lastPoint;
@@ -20,12 +18,22 @@ namespace SevenRed
         {
             InitializeComponent();
         }
-                
+
+        /// <summary>
+        /// Closes the application
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ClouseButton_Click(object sender, EventArgs e)
         {
             Close();
         }
 
+        /// <summary>
+        /// Movement of window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MainForm_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -35,15 +43,26 @@ namespace SevenRed
             }
         }
 
+        /// <summary>
+        /// Find point of movement
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MainForm_MouseDown(object sender, MouseEventArgs e)
         {
             lastPoint = new Point(e.X, e.Y);
         }
 
+        /// <summary>
+        /// Add Cards to TextBoxes and check of correct data
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddCards_Click(object sender, EventArgs e)
         {
             List<string> whiteDeck = WhiteDeckText.Lines.ToList();
             List<string> blackDeck = BlackDeckText.Lines.ToList();
+
             try
             {
                 if (whiteDeck.Count <= 8 && blackDeck.Count <= 8)
@@ -71,6 +90,10 @@ namespace SevenRed
             }            
         }
 
+        /// <summary>
+        /// Cleans textboxes
+        /// </summary>
+        /// <param name="Slot"></param>
         private void ResetTextbox(List<TextBox> Slot)
         {
             for (int i = 0; i < Slot.Count; i++)
@@ -80,6 +103,11 @@ namespace SevenRed
             }
         }
 
+        /// <summary>
+        /// Enter of textbox text and colors
+        /// </summary>
+        /// <param name="Deck"></param>
+        /// <param name="Slot"></param>
         private void EnterCardsToWinForms(List<Card> Deck, List<TextBox> Slot)
         {
             for (int i = 0; i < Deck.Count; i++)
@@ -150,6 +178,11 @@ namespace SevenRed
             }
         }
 
+        /// <summary>
+        /// Find wins combination
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FindAWinner_Click(object sender, EventArgs e)
         {
             if (WhiteDeck.Count != 0 && BlackDeck.Count != 0)
