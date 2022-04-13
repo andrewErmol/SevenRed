@@ -26,6 +26,19 @@ namespace SevenRedLibrary
         {
             Array.Sort(setOfCards.ToArray(), new CardComparer());
             return setOfCards[0];
+
+            /*Card max = setOfCards[0];
+
+
+            for (int i = 1; i < setOfCards.Count; i++)
+            {
+                if (max.CompareTo(setOfCards[i]) == 1)
+                {
+                    max = setOfCards[i];
+                }
+            }
+
+            return max;*/
         }
 
 
