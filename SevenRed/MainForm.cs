@@ -9,11 +9,12 @@ namespace SevenRed
 {
     public partial class MainForm : Form
     {
-        Point lastPoint;
+        private Point lastPoint;
 
-        List<Card> WhiteDeck;
-        List<Card> BlackDeck;
         
+        private List<TextBox> WhiteSlot;
+        private List<TextBox> BlackSlot;
+
         public MainForm()
         {
             InitializeComponent();
@@ -67,17 +68,16 @@ namespace SevenRed
             {
                 if (whiteDeck.Count <= 8 && blackDeck.Count <= 8)
                 {
-                    WhiteDeck = Service.ConvertListStringToListCard(whiteDeck);
-                    BlackDeck = Service.ConvertListStringToListCard(blackDeck);
+                    CardsCombination.ConvertListStringToListCard(whiteDeck: whiteDeck, blackDeck: blackDeck);
                     
-                    List<TextBox> WhiteSlot = new List<TextBox>(7) { whiteCard1, whiteCard2, whiteCard3, whiteCard4, whiteCard5, whiteCard6, whiteCard7 };
-                    List<TextBox> BlackSlot = new List<TextBox>(7) { blackCard1, blackCard2, blackCard3, blackCard4, blackCard5, blackCard6, blackCard7 };
+                    WhiteSlot = new List<TextBox>(7) { whiteCard1, whiteCard2, whiteCard3, whiteCard4, whiteCard5, whiteCard6, whiteCard7 };
+                    BlackSlot = new List<TextBox>(7) { blackCard1, blackCard2, blackCard3, blackCard4, blackCard5, blackCard6, blackCard7 };
 
                     ResetTextbox(WhiteSlot);
                     ResetTextbox(BlackSlot);
 
-                    EnterCardsToWinForms(WhiteDeck, WhiteSlot);
-                    EnterCardsToWinForms(BlackDeck, BlackSlot);
+                    EnterCardsToWinForms(CardsCombination.WhiteDeck, WhiteSlot);
+                    EnterCardsToWinForms(CardsCombination.BlackDeck, BlackSlot);
                 }
                 else
                 {
@@ -96,10 +96,12 @@ namespace SevenRed
         /// <param name="Slot"></param>
         private void ResetTextbox(List<TextBox> Slot)
         {
+            Color standartColor = Color.FromArgb(37, 87, 50);
+
             for (int i = 0; i < Slot.Count; i++)
             {
                 Slot[i].Text = "";
-                Slot[i].BackColor = Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(87)))), ((int)(((byte)(50)))));
+                Slot[i].BackColor = standartColor;
             }
         }
 
@@ -112,69 +114,9 @@ namespace SevenRed
         {
             for (int i = 0; i < Deck.Count; i++)
             {
-                switch (Deck[i].Nominal)
-                {
-                    case 1:
-                        Slot[i].Text = "1";
-                        Slot[i].ForeColor = Color.White;
-                        break;
-                    case 2:
-                        Slot[i].Text = "2";
-                        Slot[i].ForeColor = Color.White;
-                        break;
-                    case 3:
-                        Slot[i].Text = "3";
-                        Slot[i].ForeColor = Color.White;
-                        break;
-                    case 4:
-                        Slot[i].Text = "4";
-                        Slot[i].ForeColor = Color.White;
-                        break;
-                    case 5:
-                        Slot[i].Text = "5";
-                        Slot[i].ForeColor = Color.White;
-                        break;
-                    case 6:
-                        Slot[i].Text = "6";
-                        Slot[i].ForeColor = Color.White;
-                        break;
-                    case 7:
-                        Slot[i].Text = "7";
-                        Slot[i].ForeColor = Color.White;
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            for (int i = 0; i < Deck.Count; i++)
-            {
-                switch (Deck[i].Color)
-                {
-                    case Colors.Red:
-                        Slot[i].BackColor = Color.Red;
-                        break;
-                    case Colors.Orange:
-                        Slot[i].BackColor = Color.Orange;
-                        break;
-                    case Colors.Yellow:
-                        Slot[i].BackColor = Color.Yellow;
-                        break;
-                    case Colors.Green:
-                        Slot[i].BackColor = Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(250)))), ((int)(((byte)(70)))));
-                        break;
-                    case Colors.LightBlue:
-                        Slot[i].BackColor = Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(227)))), ((int)(((byte)(252)))));
-                        break;
-                    case Colors.Blue:
-                        Slot[i].BackColor = Color.Blue;
-                        break;
-                    case Colors.Purple:
-                        Slot[i].BackColor = Color.Purple;
-                        break;
-                    default:
-                        break;
-                }
+                Slot[i].Text = Deck[i].Nominal.ToString();
+                Slot[i].ForeColor = Color.White;
+                Slot[i].BackColor = ColorTranslator.FromHtml(Deck[i].Color.ToString());
             }
         }
 
@@ -185,14 +127,7 @@ namespace SevenRed
         /// <param name="e"></param>
         private void FindAWinner_Click(object sender, EventArgs e)
         {
-            if (WhiteDeck.Count != 0 && BlackDeck.Count != 0)
-                MessageBox.Show(Service.FindWinner(WhiteDeck, BlackDeck));
-            else if (BlackDeck.Count == 0 && WhiteDeck.Count == 0)
-                MessageBox.Show("Enter cards");
-            else if (WhiteDeck.Count == 0 && BlackDeck.Count != 0)
-                MessageBox.Show("Black deck won");
-            else
-                MessageBox.Show("White deck won");
+            MessageBox.Show(Service.GetResult());
         }
     }
 }

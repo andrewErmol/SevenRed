@@ -9,47 +9,66 @@ namespace UnitTestForSevenRed
     public class UnitTestsForSevenRed
     {
         [TestMethod]
-        public void FindWinner_WhiteWon()
+        public void CardsCombination_CreateCardList()
         {
-            List<Card> WhiteDeck = new List<Card>() { new Card("7 R"), new Card("6 G"), new Card("2 p")};
-            List<Card> BlackDeck = new List<Card>() { new Card("7 L"), new Card("2 g"), new Card("1 r") };
+            List<string> whiteDeck = new List<string>() { "1", "7 r", "6 p"};
+            List<string> blackDeck = new List<string>() { "1", "1 r", "2 p" };
+            Card expectedcardOfWhiteDeck = new Card("7 r");
+            Card expectedcardOfBlackDeck = new Card("2 p");
 
-            string expected = "White deck won";
+            CardsCombination.ConvertListStringToListCard(whiteDeck, blackDeck);
 
-            Assert.AreEqual(expected, Service.FindWinner(WhiteDeck, BlackDeck));
+            Assert.AreEqual(expectedcardOfWhiteDeck, CardsCombination.WhiteDeck[0]);
+            Assert.AreEqual(expectedcardOfBlackDeck, CardsCombination.BlackDeck[1]);
         }
 
         [TestMethod]
-        public void FindWinner_BlackWon()
+        public void Card_Equals()
         {
-            List<Card> WhiteDeck = new List<Card>() { new Card("6 R"), new Card("6 G"), new Card("2 p") };
-            List<Card> BlackDeck = new List<Card>() { new Card("7 L"), new Card("2 g"), new Card("1 r") };
+            Card Card1 = new Card("7 r");
+            Card Card2 = new Card("7 r");
+            bool expected = true;
+
+            Assert.AreEqual(expected, Card1.Equals(Card2));
+        }
+
+        [TestMethod]
+        public void ServiceGetResult_WhiteWon()
+        {
+            List<string> whiteDeck = new List<string>() { "3", "7 R", "6 G", "2 p" };
+            List<string> blackDeck = new List<string>() { "3", "7 L", "2 g", "1 r" };
+            
+            string expected = "White deck won";
+
+            CardsCombination.ConvertListStringToListCard(whiteDeck, blackDeck);
+
+            Assert.AreEqual(expected, Service.GetResult());
+        }
+
+        [TestMethod]
+        public void ServiceGetResult_BlackWon()
+        {
+            List<string> whiteDeck = new List<string>() { "3", "6 R", "6 G", "2 p" };
+            List<string> blackDeck = new List<string>() { "3", "7 L", "2 g", "1 r" };
 
             string expected = "Black deck won";
 
-            Assert.AreEqual(expected, Service.FindWinner(WhiteDeck, BlackDeck));
+            CardsCombination.ConvertListStringToListCard(whiteDeck, blackDeck);
+
+            Assert.AreEqual(expected, Service.GetResult());
         }
 
         [TestMethod]
-        public void FindWinner_Draw()
+        public void ServiceGetResult_draw()
         {
-            List<Card> WhiteDeck = new List<Card>() { new Card("6 R"), new Card("6 G"), new Card("2 p") };
-            List<Card> BlackDeck = new List<Card>() { new Card("5 L"), new Card("2 g"), new Card("6 r") };
+            List<string> whiteDeck = new List<string>() { "3", "7 R", "6 G", "2 p" };
+            List<string> blackDeck = new List<string>() { "3", "7 R", "2 g", "1 r" };
 
             string expected = "draw";
 
-            Assert.AreEqual(expected, Service.FindWinner(WhiteDeck, BlackDeck));
-        }
+            CardsCombination.ConvertListStringToListCard(whiteDeck, blackDeck);
 
-        [TestMethod]
-        public void ConvertListStringToListCardTest()
-        {
-            List<string> Deck = new List<string>() { "7", "7 r", "6 g" };
-            
-            List<Card> expected = new List<Card>() { new Card("7 R"), new Card("6 G") };
-
-            Assert.AreEqual(expected[0], Service.ConvertListStringToListCard(Deck)[0]);
-            Assert.AreEqual(expected[1], Service.ConvertListStringToListCard(Deck)[1]);
+            Assert.AreEqual(expected, Service.GetResult());
         }
     }
 }

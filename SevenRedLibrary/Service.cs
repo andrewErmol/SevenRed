@@ -3,20 +3,20 @@
 namespace SevenRedLibrary
 {
     public static class Service
-    {
+    {        
         /// <summary>
         /// Find Won deck
         /// </summary>
         /// <param name="WhiteDeck"></param>
         /// <param name="BlackDeck"></param>
         /// <returns>String Who won</returns>
-        public static string FindWinner(List<Card> WhiteDeck, List<Card> BlackDeck)
+        private static string FindWinner()
         {
-            if (HighCard(WhiteDeck).CompareTo(HighCard(BlackDeck)) == 1)
+            if (CardsCombination.GetHigherCard(CardsCombination.WhiteDeck).CompareTo(CardsCombination.GetHigherCard(CardsCombination.BlackDeck)) == 1)
             {
                 return $"Black deck won";
             }
-            else if (HighCard(BlackDeck).CompareTo(HighCard(WhiteDeck)) == 1)
+            else if (CardsCombination.GetHigherCard(CardsCombination.BlackDeck).CompareTo(CardsCombination.GetHigherCard(CardsCombination.WhiteDeck)) == 1)
             {
                 return $"White deck won";
             }
@@ -25,41 +25,21 @@ namespace SevenRedLibrary
                 return $"draw";
             }
         }
-
+        
         /// <summary>
-        /// Create List<card> for convert</card>
+        /// 
         /// </summary>
-        /// <param name="deck"></param>
-        /// <returns>list objects of card</returns>
-        public static List<Card> ConvertListStringToListCard(List<string> deck)
+        /// <returns></returns>
+        public static string GetResult()
         {
-            List<Card> Deck = new List<Card>();
-            for (int i = 1; i < deck.Count; i++)
-            {
-                Deck.Add(new Card(deck[i]));
-            }
-
-            return Deck;
+            if (CardsCombination.WhiteDeck.Count != 0 && CardsCombination.BlackDeck.Count != 0)
+                return FindWinner();
+            else if (CardsCombination.BlackDeck.Count == 0 && CardsCombination.WhiteDeck.Count == 0)
+                return "Enter cards";
+            else if (CardsCombination.WhiteDeck.Count == 0 && CardsCombination.BlackDeck.Count != 0)
+                return "Black deck won";
+            else
+                return "White deck won";
         }
-
-        /// <summary>
-        /// Find high card in ones deck
-        /// </summary>
-        /// <param name="SetOfCards"></param>
-        /// <returns>Max card in deck</returns>
-        private static Card HighCard(List<Card> SetOfCards)
-        {
-            Card max = SetOfCards[0];
-
-            for (int i = 1; i < SetOfCards.Count; i++)
-            {
-                if (max.CompareTo(SetOfCards[i]) == 1)
-                {
-                    max = SetOfCards[i];
-                }
-            }
-
-            return max;
-        }         
     }
 }
