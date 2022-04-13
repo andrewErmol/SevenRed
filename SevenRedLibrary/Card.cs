@@ -10,9 +10,6 @@ namespace SevenRedLibrary
     {
         public int Nominal { get; }
         public Colors Color { get; }
-        private string[] Combination { get; }
-        private const int NominalIndex = 0;
-        private const int ColorIndex = 1;
 
         /// <summary>
         /// Constructor Without parametrs
@@ -25,36 +22,27 @@ namespace SevenRedLibrary
         /// <param name="card"></param>
         public Card(string card)
         {
-            Combination = ParsCombination(card);
-            Nominal = Convert.ToInt32(Combination[NominalIndex]);
-            Color = SetColor(Combination[ColorIndex].ToUpper());
+            Nominal = SetNominal(card);
+            Color = SetColor(card.ToUpper());
         }
 
         /// <summary>
-        /// Check entered value of correct format
+        /// Get a nominal combination
         /// </summary>
         /// <param name="combination"></param>
-        /// <returns>Array of string type with nominal and color</returns>
+        /// <returns>Nominal(int)</returns>
         /// <exception cref="Exception"></exception>
-        private string[] ParsCombination(string combination)
+        private int SetNominal(string combination)
         {
-            Regex correctFormat = new Regex(@"\d{1}\s{1}\w{1}");
-            Match correctFormatMatch = correctFormat.Match(combination);
-
-            if (!correctFormatMatch.Success)
-            {
-                throw new Exception("Incorect format data for card");
-            }
-
             string[] splittedCombination = combination.Split(' ');
 
-            if (Convert.ToInt32(splittedCombination[0]) <= 7)
+            if (Convert.ToInt32(splittedCombination[0]) <= 7 && Convert.ToInt32(splittedCombination[0]) > 0)
             {
-                return splittedCombination;
+                return Convert.ToInt32(splittedCombination[0]);
             }
             else
             {
-                throw new Exception("The nominal for card must be no more than 7");
+                throw new Exception("The nominal for card must be no more than 7 and more then 0");
             }
         }
 
@@ -64,13 +52,15 @@ namespace SevenRedLibrary
         /// <param name="color"></param>
         /// <returns>Color</returns>
         /// <exception cref="Exception"></exception>
-        private Colors SetColor(string color)
+        private Colors SetColor(string combination)
         {
+            string[] splittedCombination = combination.Split(' ');
+            string color = splittedCombination[1];
+
             switch (color)
             {
                 case "R":
                     return Colors.Red;
-                    break;
                 case "O":
                     return Colors.Orange;
                     break;
@@ -101,23 +91,11 @@ namespace SevenRedLibrary
         /// <returns></returns>
         public int CompareTo(Card otherCard)
         {
-            if (Nominal > otherCard.Nominal)
-                return -1;
-            else if (Nominal < otherCard.Nominal)
-                return 1;
-            else
-            {
-                if (Color > otherCard.Color)
-                    return -1;
-                else if (Color < otherCard.Color)
-                    return 1;
-                else
-                    return 0;
-            }
+            return Nominal > otherCard.Nominal ? -1 : Nominal < otherCard.Nominal ? 1 : Color > otherCard.Color ? -1 : Color < otherCard.Color ? 1 : 0;
         }
 
         /// <summary>
-        /// Check objects to equality
+        /// Check objects to equalityS
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
@@ -126,6 +104,14 @@ namespace SevenRedLibrary
             return obj is Card card &&
                    Nominal == card.Nominal &&
                    Color == card.Color;
+        }
+
+        public override int GetHashCode()
+        {
+            int hashCode = -160697517;
+            hashCode = hashCode * -1521134295 + Nominal.GetHashCode();
+            hashCode = hashCode * -1521134295 + Color.GetHashCode();
+            return hashCode;
         }
     }
 }
